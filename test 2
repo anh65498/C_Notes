@@ -1,0 +1,94 @@
+// Hash Method: modulus-division. Collision res: Linear probing
+
+int hashTable[10] = {};
+int array[10] = {22, 30, 47, 62, 18, 27, 37, 82, 97};
+int address;
+for (int i = 0; i < 10; i++){
+   address = array[i] % 10;
+  while(hashTable[address] != 0) {
+      address++;
+      address %= 10;
+  };
+  hashTable[address] = array[i];
+}
+
+// Hash Method: modulus-division. Collision res: 10 Bucket with 4 slots each
+#define MAX_BUCKET    10
+#define MAX_SLOTS     4
+
+int hashTable[MAX_BUCKET][MAX_SLOTS] = {};
+int array[10] = {22, 30, 47, 62, 18, 27, 37, 82, 97},   address,   j;
+
+for (int i = 0; i < 10; i++){       // counter of array
+   address = array[i] % 10;
+
+   for (j = 0; j < 4; j++) {       // counter of bucket
+       if (hashTable[address][j] !=0)
+          continue;
+       
+       hashTable[address][j] = array[i];
+       break;      
+   }
+
+}
+
+// DECIMAL TO BINARY
+Repeatedly diving that decimal by 2 until you reach that decimal becomes 0
+Read the remainders backwards
+
+// RANGE ?????
+3 bits: 8 numbers, range: 0 to 7
+4 bits: 16 numbers, range: 0 to 15
+8 bits             ➔ 0 to 2^8  – 1 = 256 – 1 = 255	()
+16 bits 		   ➔ 0 to 2^16 – 1 = 65,536 – 1 = 65,535
+
+
+// SIZE
+
+unsigned/signed short   16 bit
+
+// SIGNED INT
+3 bits: 8 integers, range: -4 to 3
+
+	 0		000		 0 	
+	 1 		001		 1	
+	 2 		010		 2
+	 3 		011		 3
+	 4 		100		-4
+	 5 		101		-3
+	 6 		110		-2
+	 7 		111		-1
+
+8 bits   ➔ -2^7  to 2^7 –1	=> -128   to 127
+
+// CONVERT SIGNED DECIMAL INT TO BINARY
+1. take the absolute of that number.
+2. Convert that positive number to binary
+3. From the binary in step 2, change 1 to 0 and 0 to 1, then add 1 (to the rightmost bit)
+
+// BITWISE OPERATOR
+|		inclusive OR. True for all except 0 | 0
+^ 		exclusive OR. Only true when its 1 | 0  or 0 | 1
+<< 		shift right. Example:
+		
+			unsigned short a = 1;
+			a = a << 16;		// a = 0
+
+>>		shift left. Example:			
+			a = 128;
+			a = a >> 3; //a = a / (2*2*2);
+
+
+// BIT MASKING
+Purpose: 
+1. Turning ON a range of bits
+	Algorithm: 	mask = (~(((unsigned short)~0) << numbits)) << startbit;
+				new = old | mask
+
+2. Turning OFF a range of bits
+	Algorithm: 	mask = ~((~(((unsigned short) ~0) << numbits)) << startbit);
+				new = old & mask
+
+3. Toggle a range of bits
+	Algorithm: 	mask = ~( (unsigned short) ~0 << numbits)   << startbits;
+				new = old ^ mask 
